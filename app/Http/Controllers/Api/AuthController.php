@@ -50,4 +50,45 @@ class AuthController extends Controller
             'user' => $user
         ], 201);
     }
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+
+        // check validation fails
+        $validated_fails = $validator->fails();
+        if ($validated_fails) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // get validated data
+        $validated = $validator->validated();
+
+        // check user exists
+        $userExists = Auth::attempt($validated);
+
+        // if user exists
+        if ($userExists) {
+            $token = Auth::user()->createToken('auth_token')->plainTextToken;
+            return response()->json([
+                'status' => 'success',
+                'user' => Auth::user(),
+                'access_token' => $token,
+            ], 200);
+        }
+
+
+        // if user not exists
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid email or password'
+        ], 401);
+    }
 }
