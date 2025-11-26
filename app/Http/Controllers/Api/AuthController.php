@@ -11,13 +11,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $r)
     {
 
-        $validated = Validator::make($request->all(), [
+        // convert email to lowercase
+        $r['email'] = strtolower($r->email);
+
+        $validator = Validator::make($r->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|min:8',
+            'password' => 'required|string|min:8',
             // 'password' => [
             //     'required',
             //     'string',
@@ -29,50 +32,44 @@ class AuthController extends Controller
             // ]
         ]);
 
-        if ($validated->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validated->errors()
-            ], 422);
-        }
 
-        $data = $validated->validated();
-
-
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'user' => $user
-        ], 201);
-    }
-
-    public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|min:8',
-        ]);
-
-
-        // check validation fails
-        $validated_fails = $validator->fails();
-        if ($validated_fails) {
+        // if validation fails
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
                 'errors' => $validator->errors()
             ], 422);
         }
 
-        // get validated data
-        $validated = $validator->validated();
+        $user = User::create($validator->validated());
+        return response()->json([
+            'status' => 'success',
+            'user' => $user
+        ], 201);
+    }
+
+    public function login(Request $r)
+    {
+        // convert email to lowercase
+        $r['email'] = strtolower($r->email);
+
+
+        $validator = Validator::make($r->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
+        ]);
+
+
+        // check validation fails
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
         // check user exists
-        $userExists = Auth::attempt($validated);
+        $userExists = Auth::attempt($validator->validated());
 
         // if user exists
         if ($userExists) {
@@ -83,7 +80,6 @@ class AuthController extends Controller
                 'access_token' => $token,
             ], 200);
         }
-
 
         // if user not exists
         return response()->json([
