@@ -87,4 +87,29 @@ class AuthController extends Controller
             'message' => 'Invalid email or password'
         ], 401);
     }
+
+    public function index(Request $r)
+    {
+        $user = User::paginate($r->per_page ?? 10);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $user
+        ], 200);
+    }
+
+    public function logout(Request $r)
+    {
+        // Logout from ALL devices
+        // Auth::user()->tokens()->delete();
+
+
+        // Logout only THIS device
+        $r->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Logged out successfully'
+        ], 200);
+    }
 }
