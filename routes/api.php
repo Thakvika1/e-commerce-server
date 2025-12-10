@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
+
 
 
 // Route::get('/user', function (Request $request) {
@@ -10,11 +10,10 @@ use App\Http\Controllers\Api\AuthController;
 // })->middleware('auth:sanctum');
 
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [App\Http\Controllers\Api\Authentication\RegisterController::class, 'register']);
+Route::post('/login', [App\Http\Controllers\Api\Authentication\LoginController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [AuthController::class, 'index']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [App\Http\Controllers\Api\Authentication\LogoutController::class, 'logout']);
 });
