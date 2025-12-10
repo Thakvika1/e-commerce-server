@@ -6,40 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class RegisterController extends Controller
 {
-    public function register(Request $r)
+    public function register(RegisterRequest $request)
     {
-
-        // convert email to lowercase
-        $r['email'] = strtolower($r->email);
-
-        $validator = Validator::make($r->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            // 'password' => [
-            //     'required',
-            //     'string',
-            //     'min:8',             // must be at least 8 characters in length
-            //     'regex:/[a-z]/',      // must contain at least one lowercase letter
-            //     'regex:/[A-Z]/',      // must contain at least one uppercase letter
-            //     'regex:/[0-9]/',      // must contain at least one digit
-            //     'regex:/[@$!%*#?&]/'  // must contain a special character
-            // ]
-        ]);
-
-
-        // if validation fails
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        $user = User::create($validator->validated());
+        $user = User::create($request->validated());
         return response()->json([
             'status' => 'success',
             'user' => $user
