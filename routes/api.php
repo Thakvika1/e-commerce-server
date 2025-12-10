@@ -17,3 +17,9 @@ Route::post('/login', [App\Http\Controllers\Api\Authentication\LoginController::
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [App\Http\Controllers\Api\Authentication\LogoutController::class, 'logout']);
 });
+
+
+// Admin Routes
+Route::middleware(['auth:sanctum', 'Admin'])->group(function () {
+    Route::apiResource('/admin/category', App\Http\Controllers\Api\Admin\AdminCategoryController::class);
+});
