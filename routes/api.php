@@ -24,6 +24,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
 // Admin Routes
-Route::middleware(['Admin'])->group(function () {
+Route::middleware(['auth:sanctum', 'Admin'])->group(function () {
     Route::apiResource('/admin/category', AdminCategoryController::class);
 });
