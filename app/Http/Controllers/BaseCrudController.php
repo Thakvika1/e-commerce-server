@@ -11,6 +11,7 @@ class BaseCrudController extends Controller
     protected $model;        // The model class
     protected $validateData;        // for store
     protected $validateUpdateData;  // for update
+    
 
     // list all data with pagination
     public function index(Request $request)
