@@ -23,20 +23,20 @@ use App\Http\Controllers\Api\User\CartController;
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 
+// product routes for public
+Route::get('/', [ProductController::class, 'index']);
+Route::get('/product/{id}', [ProductController::class, 'show']);
+
 
 // Protected Routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
 
-    // product routes for customers
-    Route::get('/', [ProductController::class, 'index']);
-    Route::get('/product/{id}', [ProductController::class, 'show']);
-
     // Cart route for customer
     Route::get('/cart', [CartController::class, 'index']);
     Route::post('/cart/add/{id}', [CartController::class, 'add']);
-    Route::post('/cart/update/{id}', [CartController::class, 'update']);
-    Route::post('/cart/remove/{id}', [CartController::class, 'remove']);
+    Route::put('/cart/update/{id}', [CartController::class, 'update']);
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove']);
 
     // order route for customer
     Route::post('/checkout', [OrderController::class, 'checkOut']);

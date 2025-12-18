@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-use App\Models\OrderHistory;
+use App\Models\OrderItem;
 
 class Order extends Model
 {
@@ -15,8 +15,8 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function orderHistories()
+    public function orderItem()
     {
-        $this->hasMany(OrderHistory::class);
+        $this->hasMany(OrderItem::class);
     }
 }
