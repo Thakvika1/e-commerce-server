@@ -8,7 +8,7 @@ use App\Models\OrderHistory;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id', 'total_price', 'status'];
+    protected $fillable = ['user_id', 'total_price'];
 
     public function user()
     {

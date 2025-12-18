@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\Admin\AdminProductController;
 use App\Http\Controllers\Api\User\ProductController;
 use App\Http\Controllers\Api\User\OrderController;
+use App\Http\Controllers\Api\User\CartController;
 
 
 
@@ -30,6 +31,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // product routes for customers
     Route::get('/', [ProductController::class, 'index']);
     Route::get('/product/{id}', [ProductController::class, 'show']);
+
+    // Cart route for customer
+    Route::get('/cart', [CartController::class, 'index']);
+    Route::post('/cart/add/{id}', [CartController::class, 'add']);
+    Route::post('/cart/update/{id}', [CartController::class, 'update']);
+    Route::post('/cart/remove/{id}', [CartController::class, 'remove']);
+
+    // order route for customer
+    Route::post('/checkout', [OrderController::class, 'checkOut']);
 });
 
 
