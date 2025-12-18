@@ -21,9 +21,9 @@ class ProductController extends Controller
         );
     }
 
-    public function show(Request $request, $id)
+    public function show($id)
     {
-        $item = Product::find($id);
+        $item = Product::with('category')->find($id);
 
         if (!$item) {
             return response()->json([
@@ -31,7 +31,10 @@ class ProductController extends Controller
                 'message' => 'Product not found'
             ], 200);
         }
+
+        return response()->json([
+            'status' => 'error',
+            'item' => $item
+        ], 200);
     }
-
-
 }
