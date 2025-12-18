@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Product;
+use App\Models\OrderHistory;
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         // Example data for dashboard
         $data = [
@@ -16,9 +19,20 @@ class AdminController extends Controller
             'total_revenue' => 75000,
         ];
 
+        // user data
+        $userData = User::paginate($request->per_page ?? 10);
+
+        // product data
+        $productData = Product::paginate($request->per_page ?? 10);
+
+        // order data
+        $orderHistory = OrderHistory::paginate($request->per_page ?? 10);
+
         return response()->json([
             'status' => 'success',
-            'data' => $data
+            'user data' => $userData,
+            'product data' => $productData,
+            'order history' => $orderHistory,
         ], 200);
     }
 }
