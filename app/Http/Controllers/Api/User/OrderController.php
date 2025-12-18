@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 
 class OrderController extends Controller
 {
@@ -18,7 +19,7 @@ class OrderController extends Controller
         if (!$cart || $cart->items->isEmpty()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Cart not found',
+                'message' => 'The Cart is empty',
             ], 404);
         }
 
@@ -44,6 +45,9 @@ class OrderController extends Controller
                     'qty' => $item->qty,
                     'price' => $item->price
                 ]);
+                $product = Product::find($item->product_id);
+                $product->stock -= $item->qty;
+                $product->save();
             }
 
             // Clear cart

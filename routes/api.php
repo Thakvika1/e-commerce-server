@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Authentication\RegisterController;
 use App\Http\Controllers\Api\Authentication\LoginController;
 use App\Http\Controllers\Api\Authentication\LogoutController;
 use App\Http\Controllers\Api\Admin\AdminController;
+use App\Http\Controllers\Api\Admin\AdminOrderController;
 use App\Http\Controllers\Api\Admin\AdminProductController;
 use App\Http\Controllers\Api\User\ProductController;
 use App\Http\Controllers\Api\User\OrderController;
@@ -45,7 +46,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 // Admin Routes
 Route::middleware(['auth:sanctum', 'Admin'])->group(function () {
+    // admin category
     Route::apiResource('/admin/category', AdminCategoryController::class);
+
+    // admin product
     Route::apiResource('/admin/product', AdminProductController::class);
+
+    // admin order 
+    Route::get('/admin/order', [AdminOrderController::class, 'index']);
+    Route::put('/admin/order/{id}', [AdminOrderController::class, 'update']);
+
+    // admin dashboard
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
 });
