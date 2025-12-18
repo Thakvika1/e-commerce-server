@@ -21,7 +21,7 @@ class Admin
         if ($role !== 'admin') {
             return response()->json([
                 'status' => 'error',
-                'message' => 'You do not have admin access'
+                'message' => 'You do not have Permission to access this route !!!'
             ], 403);
         }
         return $next($request);
