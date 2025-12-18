@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove']);
 
     // order route for customer
-    Route::post('/checkout', [OrderController::class, 'checkOut']);
+    Route::post('/checkout', [OrderController::class, 'checkout']);
 });
 
 
