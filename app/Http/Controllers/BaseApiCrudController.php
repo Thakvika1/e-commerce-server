@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+abstract class BaseApiCrudController extends Controller
+{
+    protected $service;
+    protected string $storeRequest;
+    protected string $updateRequest;
+
+    public function index(Request $request)
+    {
+        return response()->json([
+            'status' => 'success',
+            'data' => $this->service->paginate($request->per_page ?? 10)
+        ], 200);
+    }
+
+    // create data
+    public function store()
+    {
+        $validated = app($this->storeRequest)->validated();
+
+        return $this->service->create($validated);
+    }
+
+    // detail data
+    public function show($id)
+    {
+        return response()->json([
+            'status' => 'success',
+            'data' => $this->service->findOrFail($id)
+        ], 200);
+    }
+
+    // update data
+    public function update($id)
+    {
+        $validated = app($this->updateRequest)->validated();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $this->service->update($id, $validated)
+        ]);
+    }
+
+    // delete data
+    public function destroy($id)
+    {
+        $this->service->delete($id);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Deleted successful',
+        ]);
+    }
+}

@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Http\Controllers\BaseCrudController;
+use App\Http\Controllers\BaseApiCrudController;
 
+
+// class AdminCategoryController extends BaseApiCrudController {
+
+// }
 class AdminCategoryController extends BaseCrudController
 {
 

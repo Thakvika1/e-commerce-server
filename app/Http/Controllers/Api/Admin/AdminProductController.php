@@ -2,35 +2,17 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Http\Controllers\BaseCrudController;
+use App\Http\Controllers\BaseApiCrudController;
 use App\Http\Requests\Product\CreateProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
+use App\Services\ProductService;
 
-class AdminProductController extends BaseCrudController
+class AdminProductController extends BaseApiCrudController
 {
-    public function __construct()
+    public function __construct(ProductService $service)
     {
-        $this->model = Product::class;
-
-
-        $this->validateData = [
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer|min:1',
-            'image' => 'nullable|url',
-        ];
-
-        $this->validateUpdateData = [
-            'category_id' => 'sometimes|required|exists:categories,id',
-            'name' => 'sometimes|required|string',
-            'description' => 'sometimes|nullable|string',
-            'price' => 'sometimes|required|numeric',
-            'stock' => 'sometimes|required|integer',
-            'image' => 'sometimes|nullable|url',
-        ];
+        $this->service = $service;
+        $this->storeRequest  = CreateProductRequest::class;
+        $this->updateRequest = UpdateProductRequest::class;
     }
 }
