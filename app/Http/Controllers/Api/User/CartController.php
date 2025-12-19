@@ -50,8 +50,13 @@ class CartController extends Controller
             ->where('product_id', $product->id)
             ->first();
 
-
         if ($cartItem) {
+            if ($cartItem->qty >= $product->stock) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Insufficient stock for product ID ' . $product->id . '. Available quantity: ' . $product->stock
+                ], 200);
+            }
             $cartItem->qty++;
             $cartItem->save();
         } else {
@@ -104,6 +109,13 @@ class CartController extends Controller
         }
 
         $cartItem->qty = $request->qty;
+        if ($cartItem->qty >= $product->stock) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Insufficient stock for product ID ' . $product->id . '. Available quantity: ' . $product->stock
+            ], 200);
+        }
+
         $cartItem->save();
 
         return response()->json([
