@@ -109,7 +109,7 @@ class CartController extends Controller
         }
 
         $cartItem->qty = $request->qty;
-        if ($cartItem->qty >= $product->stock) {
+        if ($cartItem->qty > $product->stock) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Insufficient stock for product ID ' . $product->id . '. Available quantity: ' . $product->stock
