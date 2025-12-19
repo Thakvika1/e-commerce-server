@@ -4,29 +4,18 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Http\Controllers\BaseCrudController;
 use App\Http\Controllers\BaseApiCrudController;
+use App\Http\Requests\Category\CreateCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Services\CategoryService;
 
 
-// class AdminCategoryController extends BaseApiCrudController {
-
-// }
-class AdminCategoryController extends BaseCrudController
+class AdminCategoryController extends BaseApiCrudController
 {
-
-    public function __construct()
+    public function __construct(CategoryService $service)
     {
-        $this->model = Category::class;
-
-        $this->validateData = [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-        ];
-
-        $this->validateUpdateData = [
-            'name' => 'sometimes|required|string',
-            'description' => 'sometimes|nullable|string',
-        ];
+        $this->service = $service;
+        $this->storeRequest  = CreateCategoryRequest::class;
+        $this->updateRequest = UpdateCategoryRequest::class;
     }
 }

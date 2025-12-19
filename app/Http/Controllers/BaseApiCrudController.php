@@ -13,18 +13,23 @@ abstract class BaseApiCrudController extends Controller
 
     public function index(Request $request)
     {
+
+        $data = $this->service->paginate($request->per_page ?? 10)
+            ?? $this->service->index();
+
         return response()->json([
             'status' => 'success',
-            'data' => $this->service->paginate($request->per_page ?? 10)
+            'data' => $data
         ], 200);
     }
 
     // create data
-    public function store()
+    public function store($product_id)
     {
         $validated = app($this->storeRequest)->validated();
+        $data = $this->service->create($validated) ?? $this->service->add($product_id);
 
-        return $this->service->create($validated);
+        return $data;
     }
 
     // detail data
