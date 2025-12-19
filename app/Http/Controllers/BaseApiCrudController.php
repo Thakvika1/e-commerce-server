@@ -37,7 +37,7 @@ abstract class BaseApiCrudController extends Controller
     {
         return response()->json([
             'status' => 'success',
-            'data' => $this->service->findOrFail($id)
+            'data' => $this->service->find($id)
         ], 200);
     }
 

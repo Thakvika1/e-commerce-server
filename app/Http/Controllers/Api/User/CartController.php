@@ -4,10 +4,6 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Models\Product;
-// use App\Models\Cart;
-// use App\Models\CartItem;
-// use Illuminate\Support\Facades\Auth;
 use App\Services\CartService;
 
 

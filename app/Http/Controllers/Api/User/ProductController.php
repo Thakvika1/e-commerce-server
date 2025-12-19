@@ -5,36 +5,26 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, ProductService $service)
     {
-        $data = Product::with('category')->paginate($request->per_page ?? 10);
-
         return response()->json(
             [
                 'status' => 'success',
-                'data' => $data
+                'data' => $service->paginate($request->per_page ?? 10)
             ],
             200
         );
     }
 
-    public function show($id)
+    public function show(ProductService $service, $id)
     {
-        $item = Product::with('category')->find($id);
-
-        if (!$item) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Product not found'
-            ], 200);
-        }
-
         return response()->json([
-            'status' => 'error',
-            'item' => $item
+            'status' => 'success',
+            'item' => $service->find($id)
         ], 200);
     }
 }

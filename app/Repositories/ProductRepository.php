@@ -13,7 +13,7 @@ class ProductRepository
 
     public function paginate($perPage)
     {
-        return Product::paginate($perPage);
+        return Product::with('category')->paginate($perPage);
     }
 
     public function create(array $data)
@@ -23,7 +23,7 @@ class ProductRepository
 
     public function findOrFail($id)
     {
-        return Product::findOrFail($id);
+        return Product::with('category')->findOrFail($id);
     }
 
     public function update($id, array $data)
