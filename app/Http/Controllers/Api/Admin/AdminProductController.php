@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Controllers\BaseCrudController;
+use App\Http\Requests\Product\CreateProductRequest;
 
 class AdminProductController extends BaseCrudController
 {
@@ -13,12 +14,13 @@ class AdminProductController extends BaseCrudController
     {
         $this->model = Product::class;
 
+
         $this->validateData = [
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
-            'stock' => 'required|integer',
+            'stock' => 'required|integer|min:1',
             'image' => 'nullable|url',
         ];
 
