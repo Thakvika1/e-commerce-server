@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Models\Category;
 
 class CategoryRepository
@@ -25,7 +26,7 @@ class CategoryRepository
 
     public function findOrFail($id)
     {
-        return Category::findOrFail($id);
+        return Category::with('products')->findOrFail($id);
     }
 
     public function update($id, array $data)

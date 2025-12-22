@@ -23,7 +23,7 @@ class CategoryService
         return $this->repo->create($data);
     }
 
-    public function findOrFail($id)
+    public function find($id)
     {
         return $this->repo->findOrFail($id);
     }

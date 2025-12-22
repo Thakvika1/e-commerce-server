@@ -18,15 +18,6 @@ use App\Http\Controllers\Api\User\Checkout\CheckoutController;
 
 
 
-
-
-
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
-
 // Public Routes
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
