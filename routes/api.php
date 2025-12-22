@@ -2,19 +2,27 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Admin\AdminCategoryController;
+
+// authentication
 use App\Http\Controllers\Api\Authentication\RegisterController;
 use App\Http\Controllers\Api\Authentication\LoginController;
 use App\Http\Controllers\Api\Authentication\LogoutController;
-use App\Http\Controllers\Api\Admin\AdminController;
-use App\Http\Controllers\Api\Admin\AdminOrderController;
-use App\Http\Controllers\Api\Admin\AdminProductController;
+
+// user route
 use App\Http\Controllers\Api\User\ProductController;
 use App\Http\Controllers\Api\User\Cart\AddToCartController;
 use App\Http\Controllers\Api\User\Cart\CheckCartController;
 use App\Http\Controllers\Api\User\Cart\UpdateCartController;
 use App\Http\Controllers\Api\User\Cart\RemoveItemController;
 use App\Http\Controllers\Api\User\Checkout\CheckoutController;
+
+// admin
+use App\Http\Controllers\Api\Admin\AdminCategoryController;
+use App\Http\Controllers\Api\Admin\AdminController;
+use App\Http\Controllers\Api\Admin\AdminProductController;
+use App\Http\Controllers\Api\Admin\Order\OrderListController;
+use App\Http\Controllers\Api\Admin\Order\UpdateOrderController;
+
 
 
 
@@ -51,8 +59,8 @@ Route::middleware(['auth:sanctum', 'Admin'])->group(function () {
     Route::apiResource('/admin/product', AdminProductController::class);
 
     // admin order 
-    Route::get('/admin/order', [AdminOrderController::class, 'index']);
-    Route::put('/admin/order/{id}', [AdminOrderController::class, 'update']);
+    Route::get('/admin/order', [OrderListController::class, 'index']);
+    Route::put('/admin/order/{id}', [UpdateOrderController::class, 'update']);
 
     // admin dashboard
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
