@@ -75,4 +75,16 @@ class CheckoutService
             throw new \Exception('Order creation failed: ' . $e->getMessage());
         }
     }
+
+    public function orderList($perPage)
+    {
+        $order = $this->repo->orderList($perPage);
+
+        return $order;
+    }
+
+    public function updateOrder($id, array $data)
+    {
+        return $this->repo->updateOrder($id, $data);
+    }
 }

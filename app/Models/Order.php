@@ -8,7 +8,7 @@ use App\Models\OrderItem;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id', 'total_price'];
+    protected $fillable = ['user_id', 'total_price', 'status',];
 
     public function user()
     {

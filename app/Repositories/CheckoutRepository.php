@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -23,5 +24,20 @@ class CheckoutRepository
             ->first();
 
         return $cart;
+    }
+
+    public function orderList($perPage)
+    {
+        $order = Order::with('orderItems')->paginate($perPage);
+
+        return $order;
+    }
+
+    public function updateOrder($id, array $data)
+    {
+        $order = Order::findOrFail($id);
+
+        $order->update($data);
+        return $order;
     }
 }

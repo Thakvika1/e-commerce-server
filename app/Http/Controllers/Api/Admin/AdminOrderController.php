@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Exception;
+use App\Services\CheckoutService;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Order\UpdateOrderRequest;
 
 class AdminOrderController extends Controller
 {
-    public function index(Request $request)
+    public function index(CheckoutService $service, Request $request)
     {
-        $data = Order::with('orderItems')->paginate($request->per_page ?? 10);
+        $data = $service->orderList($request->per_page);
 
         return response()->json([
             'status' => 'success',
@@ -19,30 +22,14 @@ class AdminOrderController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(CheckoutService $service, UpdateOrderRequest $request, $id)
     {
-        $order = Order::find($id);
-        if (!$order) {
-            return response()->json([
-                'staus' => 'error',
-                'message' => 'Order not found',
-            ], 404);
-        }
-        try {
-            $order->status = $request->status;
-            $order->save();
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Status must be (pending, confirmed, shipped, completed)',
-            ]);
-        }
-
-
+        $order = $service->updateOrder($id, $request->validated());
 
         return response()->json([
             'status' => 'success',
             'message' => 'Update success',
+            'order' => $order->load('orderItems')
         ], 200);
     }
 }
