@@ -11,7 +11,7 @@ class AdminOrderController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Order::paginate($request->per_page ?? 10);
+        $data = Order::with('orderItems')->paginate($request->per_page ?? 10);
 
         return response()->json([
             'status' => 'success',

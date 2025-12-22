@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\User;
+namespace App\Http\Controllers\Api\User\Checkout;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 
-class OrderController extends Controller
+class CheckoutController extends Controller
 {
     public function checkout()
     {
@@ -58,7 +58,7 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Order successfully',
-                'order_id' => $order
+                'order' => $order->load('orderItems')
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
