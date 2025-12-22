@@ -11,7 +11,14 @@ use App\Http\Controllers\Api\Admin\AdminOrderController;
 use App\Http\Controllers\Api\Admin\AdminProductController;
 use App\Http\Controllers\Api\User\ProductController;
 use App\Http\Controllers\Api\User\OrderController;
-use App\Http\Controllers\Api\User\CartController;
+// use App\Http\Controllers\Api\User\CartController;
+use App\Http\Controllers\Api\User\Cart\AddToCartController;
+use App\Http\Controllers\Api\User\Cart\CheckCartController;
+use App\Http\Controllers\Api\User\Cart\UpdateCartController;
+use App\Http\Controllers\Api\User\Cart\RemoveItemController;
+
+
+
 
 
 
@@ -34,10 +41,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
 
     // Cart route for customer
-    Route::get('/cart', [CartController::class, 'index']);
-    Route::post('/cart/add/{id}', [CartController::class, 'add']);
-    Route::put('/cart/update/{id}', [CartController::class, 'update']);
-    Route::delete('/cart/remove/{id}', [CartController::class, 'remove']);
+    Route::get('/cart', [CheckCartController::class, 'index']);
+    Route::post('/cart/add/{id}', [AddToCartController::class, 'add']);
+    Route::put('/cart/update/{id}', [UpdateCartController::class, 'update']);
+    Route::delete('/cart/remove/{id}', [RemoveItemController::class, 'remove']);
 
     // order route for customer
     Route::post('/checkout', [OrderController::class, 'checkout']);
