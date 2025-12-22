@@ -13,7 +13,7 @@ use App\Models\Product;
 
 class CheckoutController extends Controller
 {
-    public function checkout()
+    public function __invoke()
     {
         $cart = Cart::with('items')->where('user_id', Auth::user()->id)->first();
         if (!$cart || $cart->items->isEmpty()) {
