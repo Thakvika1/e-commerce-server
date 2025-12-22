@@ -9,7 +9,7 @@ use App\Services\CartService;
 class RemoveItemController extends Controller
 {
     // remove item from cart
-    public function remove(CartService $service, $id)
+    public function __invoke(CartService $service, $id)
     {
 
         $service->remove($id);

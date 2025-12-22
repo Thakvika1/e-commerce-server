@@ -41,10 +41,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
 
     // Cart route for customer
-    Route::get('/cart', [CheckCartController::class, 'index']);
-    Route::post('/cart/add/{id}', [AddToCartController::class, 'add']);
-    Route::put('/cart/update/{id}', [UpdateCartController::class, 'update']);
-    Route::delete('/cart/remove/{id}', [RemoveItemController::class, 'remove']);
+    Route::get('/cart', [CheckCartController::class]);
+    Route::post('/cart/add/{id}', [AddToCartController::class]);
+    Route::put('/cart/update/{id}', [UpdateCartController::class]);
+    Route::delete('/cart/remove/{id}', [RemoveItemController::class]);
 
     // order route for customer
     Route::post('/checkout', [CheckoutController::class, 'checkout']);

@@ -9,7 +9,7 @@ use App\Services\CartService;
 class UpdateCartController extends Controller
 {
     // update item in cart
-    public function update(CartService $service, Request $request, $id)
+    public function __invoke(CartService $service, Request $request, $id)
     {
         return response()->json([
             'status' => 'success',

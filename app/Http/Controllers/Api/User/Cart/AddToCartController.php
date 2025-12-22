@@ -9,7 +9,7 @@ use App\Services\CartService;
 class AddToCartController extends Controller
 {
     // add item to cart
-    public function add(CartService $service, $id)
+    public function __invoke(CartService $service, $id)
     {
 
         try {
