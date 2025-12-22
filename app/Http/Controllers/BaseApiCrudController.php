@@ -29,7 +29,10 @@ abstract class BaseApiCrudController extends Controller
         $validated = app($this->storeRequest)->validated();
         $data = $this->service->create($validated) ?? $this->service->add($product_id);
 
-        return $data;
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
     }
 
     // detail data
