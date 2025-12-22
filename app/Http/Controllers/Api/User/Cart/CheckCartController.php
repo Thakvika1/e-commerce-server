@@ -9,7 +9,7 @@ use App\Services\CartService;
 class CheckCartController extends Controller
 {
     // check cart
-    public function __invoke(CartService $service)
+    public function index(CartService $service)
     {
         return response()->json([
             'status' => 'success',

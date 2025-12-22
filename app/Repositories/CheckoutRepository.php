@@ -2,6 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
+
+
 class CheckoutRepository
 {
     /**
@@ -10,5 +14,14 @@ class CheckoutRepository
     public function __construct()
     {
         //
+    }
+
+    public function checkout()
+    {
+        $cart = Cart::with('items')
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        return $cart;
     }
 }
