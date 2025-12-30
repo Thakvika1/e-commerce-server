@@ -65,6 +65,7 @@ class CheckoutService
             }
             // Clear cart
             $cart->items()->delete();
+            $cart->delete();
 
             // insert to database
             DB::commit();

@@ -36,7 +36,8 @@ class CartRepository
             return [
                 'type' => 'exist',
                 'cartItem' => $cartItem,
-                'product' => $product
+                'product' => $product,
+                'cart' => $cart
             ];
         }
 

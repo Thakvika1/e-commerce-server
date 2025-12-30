@@ -33,6 +33,9 @@ Route::post('/login', [LoginController::class, 'login']);
 // product routes for public
 Route::get('/', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
+Route::get('/category', [AdminCategoryController::class, 'index']);
+Route::get('/category/{id}', [AdminCategoryController::class, 'show']);
+
 
 
 // Protected Routes

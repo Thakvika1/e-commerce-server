@@ -17,6 +17,7 @@ class CartService
     public function index()
     {
         $cart = $this->repo->index();
+        // dd(count($cart->items));
 
         return $cart ?? [];
     }
@@ -25,8 +26,18 @@ class CartService
     {
         $result = $this->repo->addProduct($product_id);
         $product = $result['product'];
+        $cart = $result['cart'];
+
+
+        if ($product->stock === 0) {
+            throw new \Exception(
+                'Insufficient stock. Available : ' . $product->stock
+            );
+        }
+
         if ($result['type'] === 'exist') {
             $cartItem = $result['cartItem'];
+
 
             if ($cartItem->qty >= $product->stock) {
                 throw new \Exception(
@@ -38,8 +49,14 @@ class CartService
             return $cartItem;
         }
 
+        if (count($cart->items) >= 10) {
+            throw new \Exception(
+                'You already have 10 items in your cart !!'
+            );
+        }
+
         return CartItem::create([
-            'cart_id' => $result['cart']->id,
+            'cart_id' => $cart->id,
             'product_id' => $product->id,
             'qty' => 1,
             'price' => $product->price

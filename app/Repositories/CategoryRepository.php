@@ -24,9 +24,9 @@ class CategoryRepository
         return Category::create($data);
     }
 
-    public function findOrFail($id)
+    public function find($id)
     {
-        return Category::with('products')->findOrFail($id);
+        return Category::with('products')->find($id);
     }
 
     public function update($id, array $data)

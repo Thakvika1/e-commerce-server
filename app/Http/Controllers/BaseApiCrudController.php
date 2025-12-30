@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 abstract class BaseApiCrudController extends Controller
@@ -38,10 +39,17 @@ abstract class BaseApiCrudController extends Controller
     // detail data
     public function show($id)
     {
-        return response()->json([
-            'status' => 'success',
-            'data' => $this->service->find($id)
-        ], 200);
+        try {
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $this->service->find($id)
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     // update data

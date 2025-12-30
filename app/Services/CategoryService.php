@@ -25,7 +25,14 @@ class CategoryService
 
     public function find($id)
     {
-        return $this->repo->findOrFail($id);
+        $product_id = $this->repo->find($id);
+
+        if (!$product_id) {
+            throw new \Exception(
+                'The Id ' . $id . ' not found'
+            );
+        }
+        return $product_id;
     }
 
     public function update($id, array $data)
