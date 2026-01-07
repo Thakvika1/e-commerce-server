@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\User\Cart\CheckCartController;
 use App\Http\Controllers\Api\User\Cart\UpdateCartController;
 use App\Http\Controllers\Api\User\Cart\RemoveItemController;
 use App\Http\Controllers\Api\User\Checkout\CheckoutController;
+use App\Http\Controllers\Api\User\UserController;
 
 // admin
 use App\Http\Controllers\Api\Admin\AdminCategoryController;
@@ -31,10 +32,16 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 
 // product routes for public
-Route::get('/', [ProductController::class, 'index']);
+Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/category', [AdminCategoryController::class, 'index']);
 Route::get('/category/{id}', [AdminCategoryController::class, 'show']);
+
+Route::get('/hello', function () {
+    return response()->json([
+        'message' => 'Hello from Laravel API 👋'
+    ]);
+});
 
 
 
@@ -50,6 +57,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // order route for customer
     Route::post('/checkout', [CheckoutController::class, 'checkout']);
+
+    // user 
+    Route::get('/user', [UserController::class, 'index']);
 });
 
 
