@@ -25,22 +25,27 @@ abstract class BaseApiCrudController extends Controller
     }
 
     // create data
-    public function store($product_id)
+    public function store()
     {
         $validated = app($this->storeRequest)->validated();
-        $data = $this->service->create($validated) ?? $this->service->add($product_id);
+        $data = $this->service->create($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $data
-        ]);
+        try {
+            return response()->json([
+                'status' => 'success',
+                'data' => $data
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     // detail data
     public function show($id)
     {
         try {
-
             return response()->json([
                 'status' => 'success',
                 'data' => $this->service->find($id)

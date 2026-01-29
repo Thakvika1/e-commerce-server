@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $fillable = ['category_id', 'name', 'description', 'price', 'stock', 'image'];
 
