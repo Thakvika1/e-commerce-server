@@ -15,7 +15,7 @@ abstract class BaseApiCrudController extends Controller
     public function index(Request $request)
     {
 
-        $data = $this->service->paginate($request->per_page ?? 10)
+        $data = $this->service->paginate($request->per_page ?? 15)
             ?? $this->service->index();
 
         return response()->json([

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Authentication\RegisterController;
 use App\Http\Controllers\Api\Authentication\LoginController;
 use App\Http\Controllers\Api\Authentication\LogoutController;
+use App\Http\Controllers\Api\Authentication\EditProfileController;
 
 // user route
 use App\Http\Controllers\Api\User\ProductController;
@@ -37,17 +38,18 @@ Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/category', [AdminCategoryController::class, 'index']);
 Route::get('/category/{id}', [AdminCategoryController::class, 'show']);
 
-Route::get('/hello', function () {
-    return response()->json([
-        'message' => 'Hello from Laravel API 👋'
-    ]);
-});
+// Route::get('/hello', function () {
+//     return response()->json([
+//         'message' => 'Hello from Laravel API 👋'
+//     ]);
+// });
 
 
 
 // Protected Routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
+    Route::put('/edit-profile', [EditProfileController::class, 'editProfile']);
 
     // Cart route for customer
     Route::get('/cart', [CheckCartController::class, 'index']);

@@ -14,7 +14,7 @@ class ProductController extends Controller
         return response()->json(
             [
                 'status' => 'success',
-                'data' => $service->paginate($request->per_page ?? 10)
+                'data' => $service->paginate($request->per_page ?? 15)
             ],
             200
         );
