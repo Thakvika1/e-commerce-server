@@ -28,6 +28,21 @@ abstract class BaseApiCrudController extends Controller
     public function store()
     {
         $validated = app($this->storeRequest)->validated();
+
+
+        // if (isset($validated['image'])) {
+
+        //     $path = $validated['image']->store('products', 'public');
+        //     // dd($path);
+
+        //     $validated['image'] = $path;
+        //     // dd($validated);
+        // }
+
+        if (app($this->storeRequest)->hasFile('image')) {
+            $validated['image'] = $validated['image']->store('products', 'public');
+        }
+
         $data = $this->service->create($validated);
 
         try {
