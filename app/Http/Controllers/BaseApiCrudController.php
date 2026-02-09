@@ -15,6 +15,9 @@ abstract class BaseApiCrudController extends Controller
     public function index(Request $request)
     {
 
+        // http://127.0.0.1:8000/storage/
+
+
         $data = $this->service->paginate($request->per_page ?? 15)
             ?? $this->service->index();
 
@@ -40,7 +43,18 @@ abstract class BaseApiCrudController extends Controller
         // }
 
         if (app($this->storeRequest)->hasFile('image')) {
-            $validated['image'] = $validated['image']->store('products', 'public');
+            $validated['image'] = "http://127.0.0.1:8000/storage/" . $validated['image']->store('products', 'public');
+
+            // Store in PRIVATE storage (not public)
+            // $path = basename($validated['image']->store('products'));
+
+            // Get only the filename
+            // $filename = basename($path);
+
+            // dd($filename);
+
+            // Save only the path in DB (not full URL)
+            // $validated['image'] = $path;
         }
 
         $data = $this->service->create($validated);

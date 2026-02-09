@@ -10,11 +10,14 @@ class UserController extends Controller
 {
     public function index()
     {
-        $data = Auth::user();
+        $user = Auth::user();
 
         return response()->json([
             'status' => 'success',
-            'user' => $data
-        ]);
+            'data' => [
+                ...$user->toArray(),
+                'image' => $user->image ? asset('storage/' . $user->image) : null
+            ]
+        ], 200);
     }
 }

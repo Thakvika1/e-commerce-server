@@ -26,6 +26,7 @@ class EditProfileFormRequest extends FormRequest
             'email' => 'sometimes|email|unique:users,email,' . $this->user()->id,
             'phone_number' => 'sometimes|string|max:15|nullable',
             'address' => 'sometimes|string|nullable',
+            'image' => 'sometimes',
         ];
     }
 }

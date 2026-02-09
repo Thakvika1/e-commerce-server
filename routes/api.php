@@ -46,6 +46,9 @@ Route::get('/category/{id}', [AdminCategoryController::class, 'show']);
 
 
 
+
+
+
 // Protected Routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
@@ -62,6 +65,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // user 
     Route::get('/user', [UserController::class, 'index']);
+
+    // test route for image access privae
+    Route::get('/products/image/{filename}', function ($filename) {
+        $path = storage_path("app/private/products/{$filename}");
+        dd($path);
+
+        if (!file_exists($path)) abort(404);
+        return response()->file($path);
+    });
 });
 
 
