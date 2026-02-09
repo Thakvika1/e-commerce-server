@@ -43,7 +43,7 @@ abstract class BaseApiCrudController extends Controller
         // }
 
         if (app($this->storeRequest)->hasFile('image')) {
-            $validated['image'] = "http://127.0.0.1:8000/storage/" . $validated['image']->store('products', 'public');
+            $validated['image'] =  $validated['image']->store('products', 'public');
 
             // Store in PRIVATE storage (not public)
             // $path = basename($validated['image']->store('products'));
