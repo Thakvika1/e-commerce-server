@@ -14,9 +14,9 @@ class CategoryRepository
         //
     }
 
-    public function paginate($perPage)
+    public function paginate()
     {
-        return Category::paginate($perPage);
+        return Category::with('products')->get();
     }
 
     public function create(array $data)
@@ -26,7 +26,14 @@ class CategoryRepository
 
     public function find($id)
     {
-        return Category::with('products')->find($id);
+        $category = Category::with('products')->find($id);
+
+        $category->products->transform(function ($product) {
+            $product->image = asset('storage/' . $product->image);
+            return $product;
+        });
+
+        return $category;
     }
 
     public function update($id, array $data)

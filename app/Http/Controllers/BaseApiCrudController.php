@@ -14,17 +14,19 @@ abstract class BaseApiCrudController extends Controller
 
     public function index(Request $request)
     {
+        try {
+            $data = $this->service->paginate($request->per_page ?? 15);
+            // ?? $this->service->index();
 
-        // http://127.0.0.1:8000/storage/
-
-
-        $data = $this->service->paginate($request->per_page ?? 15)
-            ?? $this->service->index();
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $data
-        ], 200);
+            return response()->json([
+                'status' => 'success',
+                'data' => $data
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     // create data
@@ -89,12 +91,18 @@ abstract class BaseApiCrudController extends Controller
     // update data
     public function update($id)
     {
-        $validated = app($this->updateRequest)->validated();
+        try {
+            $validated = app($this->updateRequest)->validated();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $this->service->update($id, $validated)
-        ]);
+            return response()->json([
+                'status' => 'success',
+                'data' => $this->service->update($id, $validated)
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     // delete data

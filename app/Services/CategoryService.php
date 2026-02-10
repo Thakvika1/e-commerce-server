@@ -13,9 +13,9 @@ class CategoryService
         protected CategoryRepository $repo
     ) {}
 
-    public function paginate($perPage)
+    public function paginate()
     {
-        return $this->repo->paginate($perPage);
+        return $this->repo->paginate();
     }
 
     public function create(array $data)
