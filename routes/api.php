@@ -67,13 +67,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'index']);
 
     // test route for image access privae
-    Route::get('/products/image/{filename}', function ($filename) {
-        $path = storage_path("app/private/products/{$filename}");
-        dd($path);
+    // Route::get('/products/image/{filename}', function ($filename) {
+    //     $path = storage_path("app/private/products/{$filename}");
+    //     dd($path);
 
-        if (!file_exists($path)) abort(404);
-        return response()->file($path);
-    });
+    //     if (!file_exists($path)) abort(404);
+    //     return response()->file($path);
+    // });
 });
 
 

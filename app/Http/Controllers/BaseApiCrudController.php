@@ -34,29 +34,8 @@ abstract class BaseApiCrudController extends Controller
     {
         $validated = app($this->storeRequest)->validated();
 
-
-        // if (isset($validated['image'])) {
-
-        //     $path = $validated['image']->store('products', 'public');
-        //     // dd($path);
-
-        //     $validated['image'] = $path;
-        //     // dd($validated);
-        // }
-
         if (app($this->storeRequest)->hasFile('image')) {
             $validated['image'] =  $validated['image']->store('products', 'public');
-
-            // Store in PRIVATE storage (not public)
-            // $path = basename($validated['image']->store('products'));
-
-            // Get only the filename
-            // $filename = basename($path);
-
-            // dd($filename);
-
-            // Save only the path in DB (not full URL)
-            // $validated['image'] = $path;
         }
 
         $data = $this->service->create($validated);

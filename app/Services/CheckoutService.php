@@ -41,7 +41,6 @@ class CheckoutService
                 'total_price' => $total
             ]);
 
-
             // Create order items
             foreach ($cart->items as $item) {
 
